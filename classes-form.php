@@ -2,15 +2,15 @@
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $fullname = $_POST["full_name"] ?? "";
     $email = $_POST["email"] ?? "";
-
+    $phone = $_POST["phone"] ?? "";
     // Validate the input
-    if (empty($fullname) || empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    if (empty($fullname) || empty($email) || empty($phone) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         echo "Invalid input. Please provide a valid fullname and email address.";
         exit;
     }
 
     // Compose the data
-    $data = [$fullname, $email];
+    $data = [$fullname, $email, $phone];
 
     // Define the CSV file path
     $csvFilePath = 'data.csv';
@@ -20,12 +20,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $file = fopen($csvFilePath, 'a');
     } else {
         $file = fopen($csvFilePath, 'w');
-        fputcsv($file, ['Full Name', 'Email']); // Add header row if the file is newly created
+        fputcsv($file, ['Full Name', 'Email', 'Phone']); // Add header row if the file is newly created
     }
 
     if (fputcsv($file, $data)) {
         fclose($file);
-        echo "Data saved to CSV file successfully!";
+        header("Location: success.html");
     } else {
         echo "Failed to save data to CSV file. Please try again later.";
     }
