@@ -47,6 +47,7 @@ if (($handle = fopen($csvFilePath, 'r')) !== false) {
         </tbody>
     </table>
     <br>
+    <a href="data.csv">Download</a>
     <a href="logout.php">Logout</a>
 </body>
 </html>
